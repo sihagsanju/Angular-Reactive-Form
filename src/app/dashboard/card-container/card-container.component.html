@@ -1,0 +1,30 @@
+<form [formGroup]="questionForm" class="question-details">
+
+     <mat-form-field appearance="outline">
+       <mat-label>Option</mat-label>
+       <textarea
+         matTextareaAutosize
+         matInput
+         placeholder="Option Text"
+         [(ngModel)]="optionText"
+         [ngModelOptions]="{standalone: true}">
+       </textarea>
+       <mat-hint>Accepts Markdown Enabled Syntax</mat-hint>
+     </mat-form-field>
+     <button mat-button (click)="addOptions()">
+       <mat-icon>add</mat-icon>
+     </button>
+ 
+   <mat-radio-group formArrayName="options" formControlName="answer" [(ngModel)]="selectedOption" >
+     <h4 *ngIf="questionFormOptions.controls.length > 0">Select an answer</h4>
+     <div *ngFor="let option of questionFormOptions.controls; index as i" >
+       <mat-radio-button [value]="questionForm.controls.options.controls[i].controls.optionText.value">
+         <div>{{ questionForm.controls.options.controls[i].controls.optionText.value }}</div>
+       </mat-radio-button>
+       <button mat-icon-button (click)="removeOption(questionForm.controls.options.controls[i].controls)">
+         <mat-icon>clear</mat-icon>
+       </button>
+     </div>
+   </mat-radio-group>
+ </form>
+ 
